@@ -25,56 +25,9 @@ class ViewController: UIViewController {
         mainStackView.alignment = align
         self.contentView.addSubview(mainStackView)
         
-        let stackView = UIStackView()
-        stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution = distri
-        stackView.alignment = align
-
-        let views = getStandardViews(superView: stackView, buttonTag: 0)
-        stackView.addArrangedSubview(views.0)
-        stackView.addArrangedSubview(views.1)
-        stackView.addArrangedSubview(views.2)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        stacks.append(stackView)
-        expanded.append(true)
-        
-        let stackView2 = UIStackView()
-        stackView2.axis = NSLayoutConstraint.Axis.vertical
-        stackView2.distribution = distri
-        stackView2.alignment = align
-
-        let views2 = getStandardViews(superView: stackView2, buttonTag: 1)
-        stackView2.addArrangedSubview(views2.0)
-        stackView2.addArrangedSubview(views2.1)
-        stackView2.addArrangedSubview(views2.2)
-        stackView2.translatesAutoresizingMaskIntoConstraints = false
-        for view in stackView2.arrangedSubviews {
-            if !(view is UIButton) {
-                view.isHidden = true
-            }
-        }
-
-        stacks.append(stackView2)
-        expanded.append(false)
-        
-        let stackView3 = UIStackView()
-        stackView3.axis = NSLayoutConstraint.Axis.vertical
-        stackView3.distribution = distri
-        stackView3.alignment = align
-
-        let views3 = getStandardViews(superView: stackView3, buttonTag: 2)
-        stackView3.addArrangedSubview(views3.0)
-        stackView3.addArrangedSubview(views3.1)
-        stackView3.addArrangedSubview(views3.2)
-        stackView3.translatesAutoresizingMaskIntoConstraints = false
-        for view in stackView3.arrangedSubviews {
-            if !(view is UIButton) {
-                view.isHidden = true
-            }
-        }
-        
-        stackView3.isHidden = true
+        let stackView = getSubStackView(distribution: distri, alignment: align, index: 0, expanded: true)
+        let stackView2 = getSubStackView(distribution: distri, alignment: align, index: 1, expanded: false)
+        let stackView3 = getSubStackView(distribution: distri, alignment: align, index: 2, expanded: false)
         
         mainStackView.addArrangedSubview(stackView)
         mainStackView.addArrangedSubview(stackView2)
@@ -85,9 +38,36 @@ class ViewController: UIViewController {
         mainStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
         mainStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
         mainStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
+        
+        stackView3.isHidden = true
+    }
+    
+    func getSubStackView(distribution: UIStackView.Distribution, alignment: UIStackView.Alignment, index: Int, expanded: Bool) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution = distribution
+        stackView.alignment = alignment
 
-        stacks.append(stackView3)
-        expanded.append(false)
+        let views = getStandardViews(superView: stackView, buttonTag: index)
+        stackView.addArrangedSubview(views.0)
+        stackView.addArrangedSubview(views.1)
+        stackView.addArrangedSubview(views.2)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if expanded {
+            self.expanded.append(true)
+        } else {
+            self.expanded.append(false)
+            for view in stackView.arrangedSubviews {
+                if !(view is UIButton) {
+                    view.isHidden = true
+                }
+            }
+        }
+        
+        stacks.append(stackView)
+        
+        return stackView
     }
     
     func getStandardViews(superView: UIView, buttonTag: Int) -> (UIButton, UIView, UILabel) {
