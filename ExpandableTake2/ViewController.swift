@@ -28,10 +28,12 @@ class ViewController: UIViewController {
         let stackView = getSubStackView(distribution: distri, alignment: align, index: 0, expanded: true)
         let stackView2 = getSubStackView(distribution: distri, alignment: align, index: 1, expanded: false)
         let stackView3 = getSubStackView(distribution: distri, alignment: align, index: 2, expanded: false)
+        let stackView4 = getSubStackView(distribution: distri, alignment: align, index: 3, expanded: false)
         
         mainStackView.addArrangedSubview(stackView)
         mainStackView.addArrangedSubview(stackView2)
         mainStackView.addArrangedSubview(stackView3)
+        mainStackView.addArrangedSubview(stackView4)
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
@@ -40,6 +42,7 @@ class ViewController: UIViewController {
         mainStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
         
         stackView3.isHidden = true
+        stackView4.isHidden = true
     }
     
     func getSubStackView(distribution: UIStackView.Distribution, alignment: UIStackView.Alignment, index: Int, expanded: Bool) -> UIStackView {
