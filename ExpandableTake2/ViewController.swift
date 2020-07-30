@@ -19,11 +19,16 @@ class ViewController: UIViewController {
         let distri: UIStackView.Distribution = .fill
         let align: UIStackView.Alignment = .fill
         
+        let mainStackView = UIStackView()
+        mainStackView.axis = NSLayoutConstraint.Axis.vertical
+        mainStackView.distribution = distri
+        mainStackView.alignment = align
+        self.contentView.addSubview(mainStackView)
+        
         let stackView = UIStackView()
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution = distri
         stackView.alignment = align
-        self.contentView.addSubview(stackView)
 
         let views = getStandardViews(superView: stackView, buttonTag: 0)
         stackView.addArrangedSubview(views.0)
@@ -38,7 +43,6 @@ class ViewController: UIViewController {
         stackView2.axis = NSLayoutConstraint.Axis.vertical
         stackView2.distribution = distri
         stackView2.alignment = align
-        self.contentView.addSubview(stackView2)
 
         let views2 = getStandardViews(superView: stackView2, buttonTag: 1)
         stackView2.addArrangedSubview(views2.0)
@@ -58,7 +62,6 @@ class ViewController: UIViewController {
         stackView3.axis = NSLayoutConstraint.Axis.vertical
         stackView3.distribution = distri
         stackView3.alignment = align
-        self.contentView.addSubview(stackView3)
 
         let views3 = getStandardViews(superView: stackView3, buttonTag: 2)
         stackView3.addArrangedSubview(views3.0)
@@ -71,19 +74,17 @@ class ViewController: UIViewController {
             }
         }
         
-        stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-
-        stackView2.topAnchor.constraint(equalTo: stackView.bottomAnchor).isActive = true
-        stackView2.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        stackView2.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-
+        stackView3.isHidden = true
         
-        stackView3.topAnchor.constraint(equalTo: stackView2.bottomAnchor).isActive = true
-        stackView3.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-        stackView3.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        stackView3.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
+        mainStackView.addArrangedSubview(stackView)
+        mainStackView.addArrangedSubview(stackView2)
+        mainStackView.addArrangedSubview(stackView3)
+        
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        mainStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+        mainStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
+        mainStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
 
         stacks.append(stackView3)
         expanded.append(false)
@@ -134,7 +135,12 @@ class ViewController: UIViewController {
                     }
                     expanded[i] = false
                 }
-
+            }
+            
+            if sender.tag == 1 {
+                stacks[2].isHidden = false
+            } else if sender.tag == 0 {
+                stacks[2].isHidden = true
             }
         }
     }
