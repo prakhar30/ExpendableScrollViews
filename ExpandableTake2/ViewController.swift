@@ -117,10 +117,12 @@ class ViewController: UIViewController {
                 }
             }
             
-            if sender.tag == 1 {
-                stacks[2].isHidden = false
-            } else if sender.tag == 0 {
-                stacks[2].isHidden = true
+            for i in (sender.tag+1)..<stacks.count {
+                if i == sender.tag + 1 {
+                    stacks[i].isHidden = false
+                } else {
+                    stacks[i].isHidden = true
+                }
             }
         }
     }
